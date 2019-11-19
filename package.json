@@ -2,7 +2,7 @@
     "description": "Runtime mesh importer for Unity powered by AssimpNet",
     "displayName": "UnityMeshImporter",
     "name": "com.donghok.meshimporter",
-    "unity": "2019.2.9",
+    "unity": "2019.2",
     "version": "0.1.0",
     "dependencies": {},
     "keywords": [
