@@ -20,6 +20,11 @@
 * THE SOFTWARE.
 */
 
+/* Note 2019
+* 
+* This file is modified by Dongho Kang to distributed as a Unity package 2019.
+*/ 
+
 using Assimp.Unmanaged;
 using System.IO;
 using UnityEngine;
@@ -32,6 +37,8 @@ namespace Assimp
     /// </summary>
     public class AssimpUnity
     {
+        private const string packageName = "com.donghok.meshimporter";
+        
         private static bool s_triedLoading = false;
         private static bool s_assimpAvailable = false;
 
@@ -64,7 +71,8 @@ namespace Assimp
             }
 
             //First time initialization, need to set a probing path (at least in editor) to resolve the native dependencies
-            string pluginsFolder = Path.Combine(Application.dataPath, "Plugins");
+            string packageFolder = Path.GetFullPath(string.Format($"Packages/{packageName}/Runtime"));
+            string pluginsFolder = Path.Combine(packageFolder, "Plugins");
             string editorPluginNativeFolder = Path.Combine(pluginsFolder, "AssimpNet", "Native");
             string native64LibPath = null;
             string native32LibPath = null;
