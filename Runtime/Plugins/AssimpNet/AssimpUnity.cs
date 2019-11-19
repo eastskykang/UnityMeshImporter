@@ -71,9 +71,8 @@ namespace Assimp
             }
 
             //First time initialization, need to set a probing path (at least in editor) to resolve the native dependencies
-            string packageFolder = Path.GetFullPath(string.Format($"Packages/{packageName}/Runtime"));
-            string pluginsFolder = Path.Combine(packageFolder, "Plugins");
-            string editorPluginNativeFolder = Path.Combine(pluginsFolder, "AssimpNet", "Native");
+            string pluginsFolder = Path.Combine(Application.dataPath, "Plugins");
+            string editorPluginNativeFolder = Path.Combine(Path.GetFullPath("Packages"), packageName, "Runtime", "AssimpNet", "Native");
             string native64LibPath = null;
             string native32LibPath = null;
 
@@ -99,9 +98,9 @@ namespace Assimp
                     native32LibPath = Path.Combine(editorPluginNativeFolder, "linux", "x86");
                     break;
                 case RuntimePlatform.LinuxPlayer:
-                    //Linux standalone creates subfolders presumably since it allows "universal" types
-                    native64LibPath = Path.Combine(pluginsFolder, "x86_64");
-                    native32LibPath = Path.Combine(pluginsFolder, "x86");
+                    //Linux also drop package plugins inside Plugins folder
+                    native64LibPath = pluginsFolder;
+                    native32LibPath = pluginsFolder;
                     break;
                 case RuntimePlatform.OSXEditor:
                     native64LibPath = Path.Combine(editorPluginNativeFolder, "osx", "x86_64");
