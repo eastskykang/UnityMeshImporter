@@ -1,6 +1,6 @@
 # UnityMeshImporter
 
-Runtime mesh importer for Unity using AssimpNet.
+Runtime mesh importer for Unity using AssimpNet. This mesh importer creates UnityEngine.GameObject from mesh files.
 
 ## What is Assimp? 
 
@@ -12,15 +12,34 @@ Runtime mesh importer for Unity using AssimpNet.
   
 This project uses C# .NET wrapper for the Assimp, [AssimpNet](https://bitbucket.org/Starnick/assimpnet/src/master/)
 
+Supported file formates are listed [here](http://assimp.sourceforge.net/main_features_formats.html). 
+
 ## Quickstart
 
-In the Packages directory of your Unity project, 
-```sh
-$ git clone https://github.com/eastskykang/UnityMeshImporter.git com.donghok.meshimporter
-```
+1. Install "com.donghok.meshimporter" package as follows:
+    In the Packages directory of your Unity project, 
+    ```sh
+    $ git clone https://github.com/eastskykang/UnityMeshImporter.git com.donghok.meshimporter
+    ```
+    
+    or
+    
+    Open ```Packages/manifest.json``` and add ```"com.donghok.meshimporter":"https://github.com/eastskykang/UnityMeshImporter.git"``` to the "dependencies" list.
 
-or
+2. As the package is imported, you can use UnityMeshImporter as follows:
 
-Open ```Packages/manifest.json``` and add ```"com.donghok.meshimporter":"https://github.com/eastskykang/UnityMeshImporter.git"``` to the "dependencies" list.
+    ```cs
+    using UnityMeshImporter;
+    
+    string meshFile = <YOUR-MESH-FILE-PATH>;
+    var ob = MeshImporter.Load(meshFile);
+    ```
 
-See [UnityMeshImportExample](https://github.com/eastskykang/UnityMeshImportExample) for an example.
+3. The mesh importer uses Unity "Standard" shader. Please add Standard shader to ```Project Settings > Graphics > Built-in Shader Settings > Always Included Shaders```. 
+
+## Unity Example
+
+See the following examples:
+
+- [UnityMeshImportExample](https://github.com/eastskykang/UnityMeshImportExample)
+- [raisimUnity](https://github.com/leggedrobotics/raisimUnity) 
