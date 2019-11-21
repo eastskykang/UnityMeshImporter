@@ -1,5 +1,5 @@
 {
-    "description": "Runtime mesh importer for Unity powered by AssimpNet",
+    "description": "This package provides runtime mesh importer for Unity using AssimpNet.\nIt creates UnityEngine.GameObject from mesh files.",
     "displayName": "Unity Mesh Importer",
     "name": "com.donghok.meshimporter",
     "unity": "2019.2",
