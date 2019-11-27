@@ -42,4 +42,4 @@ Supported file formates are listed [here](http://assimp.sourceforge.net/main_fea
 See the following examples:
 
 - [UnityMeshImportExample](https://github.com/eastskykang/UnityMeshImportExample)
-- [raisimUnity](https://github.com/leggedrobotics/raisimUnity) 
+- [RaiSimUnity](https://github.com/leggedrobotics/RaiSimUnity) 
