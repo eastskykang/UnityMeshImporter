@@ -16,6 +16,12 @@ Supported file formates are listed [here](http://assimp.sourceforge.net/main_fea
 
 ## Quickstart
 
+Before you start, you may need to install minizip package by 
+
+```sh
+$ sudo apt install minizip
+```
+
 1. Install "com.donghok.meshimporter" package as follows:
     In the Packages directory of your Unity project, 
     ```sh

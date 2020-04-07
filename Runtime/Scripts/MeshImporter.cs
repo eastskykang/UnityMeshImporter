@@ -213,37 +213,18 @@ namespace UnityMeshImporter
                 }
             
                 // Transform
-                UnityEngine.Matrix4x4 uTransform = new UnityEngine.Matrix4x4();
-                uTransform.SetColumn(0, new Vector4(
-                    node.Transform.A1, 
-                    node.Transform.B1,
-                    node.Transform.C1,
-                    node.Transform.D1
-                ));
-                uTransform.SetColumn(1, new Vector4(
-                    node.Transform.A2, 
-                    node.Transform.B2,
-                    node.Transform.C2,
-                    node.Transform.D2
-                ));
-                uTransform.SetColumn(2, new Vector4(
-                    node.Transform.A3, 
-                    node.Transform.B3,
-                    node.Transform.C3,
-                    node.Transform.D3
-                ));
-                uTransform.SetColumn(3, new Vector4(
-                    node.Transform.A4,
-                    node.Transform.B4,
-                    node.Transform.C4,
-                    node.Transform.D4
-                ));
-                
-                var euler = uTransform.rotation.eulerAngles;
-                
-                uOb.transform.localPosition = uTransform.GetColumn(3);
+                // Decompose Assimp transform into scale, rot and translaction 
+                Assimp.Vector3D aScale = new Assimp.Vector3D();
+                Assimp.Quaternion aQuat = new Assimp.Quaternion();
+                Assimp.Vector3D aTranslation = new Assimp.Vector3D();
+                node.Transform.Decompose(out aScale, out aQuat, out aTranslation);
+
+                // Convert Assimp transfrom into Unity transform and set transformation of game object 
+                UnityEngine.Quaternion uQuat = new UnityEngine.Quaternion(aQuat.X, aQuat.Y, aQuat.Z, aQuat.W);
+                var euler = uQuat.eulerAngles;
+                uOb.transform.localScale = new UnityEngine.Vector3(aScale.X, aScale.Y, aScale.Z);
+                uOb.transform.localPosition = new UnityEngine.Vector3(aTranslation.X, aTranslation.Y, aTranslation.Z);
                 uOb.transform.localRotation = UnityEngine.Quaternion.Euler(euler.x, -euler.y, euler.z);
-//                uOb.transform.localRotation = UnityEngine.Quaternion.LookRotation(uTransform.GetColumn(2), uTransform.GetColumn(1));
             
                 if (node.HasChildren)
                 {
