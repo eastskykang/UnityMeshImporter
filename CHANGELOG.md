@@ -6,6 +6,11 @@ This log file is following the guideline of [keep a changelog](https://keepachan
 
 ## [Unreleased]
 
+## [0.1.1] - 2020-08-25
+
+### Fixed 
+- Fix run time error on Windows while loading AssimpNet
+
 ## [0.1.0] - 2019-11-19
 
 ### Added 

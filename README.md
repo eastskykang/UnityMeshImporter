@@ -2,6 +2,8 @@
 
 Runtime mesh importer for Unity using AssimpNet. This mesh importer creates UnityEngine.GameObject from mesh files.
 
+**Update**: Tested on Linux, macOS and Windows.
+
 ## What is Assimp? 
 
 > Open Asset Import Library (Assimp) is a cross-platform 3D model import library which aims to provide a common application programming interface (API) for different 3D asset file formats. 

@@ -3,7 +3,7 @@
     "displayName": "Unity Mesh Importer",
     "name": "com.donghok.meshimporter",
     "unity": "2019.2",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "dependencies": {},
     "keywords": [
         "Mesh",
@@ -13,6 +13,6 @@
     "author": {
     "name": "Dongho Kang",
     "email": "eastsky.kang@gmail.com",
-    "url": "https://donghok.me/"
+    "url": "https://donghok.me/UnityMeshImporter/"
     }
 }
