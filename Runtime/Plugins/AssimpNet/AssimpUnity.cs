@@ -89,9 +89,8 @@ namespace Assimp
                     native32LibPath = Path.Combine(editorPluginNativeFolder, "win", "x86");
                     break;
                 case RuntimePlatform.WindowsPlayer:
-                    //Seems like windows they are not added to any specific folder, just dropped inside Plugins folder
-                    native64LibPath = pluginsFolder;
-                    native32LibPath = pluginsFolder;
+                    native64LibPath = pluginsFolder + "/x86_64";
+                    native32LibPath = pluginsFolder + "/x86";
                     break;
                 case RuntimePlatform.LinuxEditor:
                     native64LibPath = Path.Combine(editorPluginNativeFolder, "linux", "x86_64");
