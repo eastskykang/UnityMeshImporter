@@ -59,6 +59,10 @@ namespace UnityMeshImporter
             if(!File.Exists(meshPath))
                 return null;
 
+            #if UNITY_EDITOR // It is possible the library is not loaded when calling from ExecuteInEditModeScript.
+            AssimpUnity.InitializePlugin();
+            #endif
+
             AssimpContext importer = new AssimpContext();
             Scene scene = importer.ImportFile(meshPath);
             if (scene == null)
