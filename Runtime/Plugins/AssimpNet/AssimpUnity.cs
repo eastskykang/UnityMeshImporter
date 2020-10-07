@@ -81,7 +81,7 @@ namespace Assimp
             //First time initialization, need to set a probing path (at least in editor) to resolve the native dependencies
             string pluginsFolder = Path.Combine(Application.dataPath, "Plugins");
 #if UNITY_EDITOR
-            string editorPluginNativeFolder = Path.Combine(Path.GetFullPath(string.Format($"Assets/{packageName}")), "Runtime", "Plugins", "AssimpNet", "Native");
+            string editorPluginNativeFolder = Path.Combine(Path.GetFullPath(string.Format($"Packages/{packageName}")), "Runtime", "Plugins", "AssimpNet", "Native");
 #endif
             string native64LibPath = null;
             string native32LibPath = null;
