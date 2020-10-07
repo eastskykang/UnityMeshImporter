@@ -59,6 +59,10 @@ namespace UnityMeshImporter
             if(!File.Exists(meshPath))
                 return null;
 
+            #if UNITY_EDITOR // It is possible the library is not loaded when calling from ExecuteInEditModeScript.
+            AssimpUnity.InitializePlugin();
+            #endif
+
             AssimpContext importer = new AssimpContext();
             Scene scene = importer.ImportFile(meshPath);
             if (scene == null)
@@ -72,7 +76,7 @@ namespace UnityMeshImporter
             {
                 foreach (var m in scene.Materials)
                 {
-                    UnityEngine.Material uMaterial = new UnityEngine.Material(Shader.Find("Standard"));
+                    UnityEngine.Material uMaterial = new UnityEngine.Material(Shader.Find("Universal Render Pipeline/Lit"));
 
                     // Albedo
                     if (m.HasColorDiffuse)
@@ -160,12 +164,19 @@ namespace UnityMeshImporter
                         foreach (var f in m.Faces)
                         {
                             // Ignore non-triangle faces
-                            if (f.IndexCount != 3)
+                            if (f.IndexCount != 3 && f.IndexCount != 4)
                                 continue;
 
                             uIndices.Add(f.Indices[2]);
                             uIndices.Add(f.Indices[1]);
                             uIndices.Add(f.Indices[0]);
+
+                            if (f.IndexCount == 4)
+                            {
+                                uIndices.Add(f.Indices[0]);
+                                uIndices.Add(f.Indices[3]);
+                                uIndices.Add(f.Indices[2]);
+                            }
                         }
                     }
 
