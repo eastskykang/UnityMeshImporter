@@ -25,8 +25,13 @@
 * This file is modified by Dongho Kang to distributed as a Unity package 2019.
 */ 
 
+#if (UNITY_64 && UNITY_STANDALONE) || UNITY_STANDALONE_WIN || UNITY_EDITOR
+
 using Assimp.Unmanaged;
 using System.IO;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace Assimp
@@ -53,8 +58,12 @@ namespace Assimp
             }
         }
 
+        #if UNITY_EDITOR
+        [InitializeOnLoadMethod]
+        #else
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void InitializePlugin()
+        #endif
+        public static void InitializePlugin()
         {
             //Only try once during runtime
             if(s_triedLoading)
@@ -69,13 +78,13 @@ namespace Assimp
                 s_triedLoading = true;
                 return;
             }
-
             //First time initialization, need to set a probing path (at least in editor) to resolve the native dependencies
             string pluginsFolder = Path.Combine(Application.dataPath, "Plugins");
-            string editorPluginNativeFolder = Path.Combine(Path.GetFullPath(string.Format($"Packages/{packageName}")), "Runtime", "Plugins", "AssimpNet", "Native");
+#if UNITY_EDITOR
+            string editorPluginNativeFolder = Path.Combine(Path.GetFullPath(string.Format($"Assets/{packageName}")), "Runtime", "Plugins", "AssimpNet", "Native");
+#endif
             string native64LibPath = null;
             string native32LibPath = null;
-
             //Set if any platform needs to tweak the default name AssimpNet uses for the platform, null clears using an override at all
             string override64LibName = null;
             string override32LibName = null;
@@ -84,22 +93,14 @@ namespace Assimp
             //Unity copies the native DLLs for the specific target architecture into a single Plugin folder.
             switch(Application.platform)
             {
+#if UNITY_EDITOR
                 case RuntimePlatform.WindowsEditor:
                     native64LibPath = Path.Combine(editorPluginNativeFolder, "win", "x86_64");
                     native32LibPath = Path.Combine(editorPluginNativeFolder, "win", "x86");
                     break;
-                case RuntimePlatform.WindowsPlayer:
-                    native64LibPath = pluginsFolder + "/x86_64";
-                    native32LibPath = pluginsFolder + "/x86";
-                    break;
                 case RuntimePlatform.LinuxEditor:
                     native64LibPath = Path.Combine(editorPluginNativeFolder, "linux", "x86_64");
                     native32LibPath = Path.Combine(editorPluginNativeFolder, "linux", "x86");
-                    break;
-                case RuntimePlatform.LinuxPlayer:
-                    //Linux also drop package plugins inside Plugins folder
-                    native64LibPath = pluginsFolder;
-                    native32LibPath = pluginsFolder;
                     break;
                 case RuntimePlatform.OSXEditor:
                     native64LibPath = Path.Combine(editorPluginNativeFolder, "osx", "x86_64");
@@ -112,6 +113,16 @@ namespace Assimp
                     override64LibName = bundlelibName;
                     override32LibName = bundlelibName;
                 }
+                    break;
+#endif
+                case RuntimePlatform.WindowsPlayer:
+                    native64LibPath = pluginsFolder + "/x86_64";
+                    native32LibPath = pluginsFolder + "/x86";
+                    break;
+                case RuntimePlatform.LinuxPlayer:
+                    //Linux also drop package plugins inside Plugins folder
+                    native64LibPath = pluginsFolder;
+                    native32LibPath = pluginsFolder;
                     break;
                 case RuntimePlatform.OSXPlayer:
                     native64LibPath = pluginsFolder;
@@ -153,3 +164,5 @@ namespace Assimp
         }
     }
 }
+
+#endif
