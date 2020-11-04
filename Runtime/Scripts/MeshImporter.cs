@@ -159,13 +159,16 @@ namespace UnityMeshImporter
                     {
                         foreach (var f in m.Faces)
                         {
-                            // Ignore non-triangle faces
-                            if (f.IndexCount != 3)
+                            // Ignore degenerate faces
+                            if (f.IndexCount == 1 || f.IndexCount == 2)
                                 continue;
 
-                            uIndices.Add(f.Indices[2]);
-                            uIndices.Add(f.Indices[1]);
-                            uIndices.Add(f.Indices[0]);
+                            for(int i=0;i<(f.IndexCount-2);i++)
+                            {
+                                uIndices.Add(f.Indices[i+2]);
+                                uIndices.Add(f.Indices[i+1]);
+                                uIndices.Add(f.Indices[0]);
+                            }
                         }
                     }
 
